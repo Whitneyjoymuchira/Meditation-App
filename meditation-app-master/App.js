@@ -15,11 +15,19 @@ const App = () => {
     //animate
     outline.style.strokeDasharray = outlineLength;
     outline.style.strokeDashoffset = outlineLength;
+    let timeSelect=document.querySelectorAll('.time-select button')
 
     //AddEventListener
     play.addEventListener('click', () => {
         checkPlaying(song)
     })
+    //select sound
+timeSelect.forEach(element =>{
+    element.addEventListener('click', function(){
+        fakeDuration=this.getAttribute('data-time')
+        timeDisplay.textContent=`${Math.floor(fakeDuration / 60)}: ${Math.floor(fakeDuration % 60)}`
+    })
+})
 
     //check if playing or paused
     const checkPlaying = (song) => {
