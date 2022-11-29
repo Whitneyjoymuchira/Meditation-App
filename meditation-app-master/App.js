@@ -15,19 +15,19 @@ const App = () => {
     //animate
     outline.style.strokeDasharray = outlineLength;
     outline.style.strokeDashoffset = outlineLength;
-    let timeSelect=document.querySelectorAll('.time-select button')
+    let timeSelect = document.querySelectorAll('.time-select button')
 
     //AddEventListener
     play.addEventListener('click', () => {
         checkPlaying(song)
     })
     //select sound
-timeSelect.forEach(element =>{
-    element.addEventListener('click', function(){
-        fakeDuration=this.getAttribute('data-time')
-        timeDisplay.textContent=`${Math.floor(fakeDuration / 60)}: ${Math.floor(fakeDuration % 60)}`
+    timeSelect.forEach(element => {
+        element.addEventListener('click', function () {
+            fakeDuration = this.getAttribute('data-time')
+            timeDisplay.textContent = `${Math.floor(fakeDuration / 60)}: ${Math.floor(fakeDuration % 60)}`
+        })
     })
-})
 
     //check if playing or paused
     const checkPlaying = (song) => {
@@ -50,14 +50,21 @@ timeSelect.forEach(element =>{
         let elapsed = fakeDuration - currentTime
         let seconds = Math.floor(elapsed % 60)
         let minutes = Math.floor(elapsed / 60)
-    
-    //animate progress circle
-    let progress = outlineLength - (currentTime / fakeDuration) * outlineLength
-    outline.style.strokeDashoffset = progress
 
-    //decorate text
-    timeDisplay.textContent=`${minutes} :${seconds}`
+        //animate progress circle
+        let progress = outlineLength - (currentTime / fakeDuration) * outlineLength
+        outline.style.strokeDashoffset = progress
+
+        //decorate text
+        timeDisplay.textContent = `${minutes} :${seconds}`
+        if (currentTime >= fakeDuration) {
+            song.pause()
+            song.currentTime=0
+            play.src='./svg/play.svg'
+            video.pause()
+        }
     }
+
 };
 
 App();
